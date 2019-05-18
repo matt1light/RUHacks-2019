@@ -63,7 +63,6 @@ def formoneJSON():
         'id': str(uuid.uuid4()),
         'photo': photourl,
         'class': 'senior',
-        'gender': gender,
         'name': name,
         'age': random.randint(55, 100),
         'email': name.lower().replace(' ', '') + '@gmail.com',
