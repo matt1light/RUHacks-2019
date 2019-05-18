@@ -1,115 +1,64 @@
-import React, {Component} from 'react';
-import { Link } from 'react-router-dom'
-import Card from 'react-bootstrap/Card'
-import CardGroup from 'react-bootstrap/CardGroup'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 
+const styles = {
+    card: {
+        maxWidth: 345,
+    },
+    media: {
+        // ⚠️ object-fit is not supported by IE 11.
+        objectFit: 'contain',
+    },
+};
 
-class MatchCard extends Component {
-    state = {  }
-    render() {
-        return (
-            <div>
-                <h1>Matches</h1>
-                <CardGroup>
-                <Card border ='secondary' bg="primary" text="white" style={{ width: '18rem' }}>
-                    <Card.Header>Header</Card.Header>
-                    <Card.Body>
-                        <Card.Title>Primary Card Title</Card.Title>
-                        <Card.Text>
-                            Some quick example text to build on the card title and make up the bulk
-                            of the card's content.
-                        </Card.Text>
-                    </Card.Body>
-                </Card>
-                <br />
-                <Card bg="secondary" text="white" style={{ width: '18rem' }}>
-                    <Card.Header>Header</Card.Header>
-                    <Card.Body>
-                        <Card.Title>Secondary Card Title</Card.Title>
-                        <Card.Text>
-                            Some quick example text to build on the card title and make up the bulk
-                            of the card's content.
-                        </Card.Text>
-                    </Card.Body>
-                </Card>
-                <br />
-
-                <Card bg="success" text="white" style={{ width: '18rem' }}>
-                    <Card.Header>Header</Card.Header>
-                    <Card.Body>
-                        <Card.Title>Success Card Title</Card.Title>
-                        <Card.Text>
-                            Some quick example text to build on the card title and make up the bulk
-                            of the card's content.
-                        </Card.Text>
-                    </Card.Body>
-                </Card>
-                <br />
-
-                <Card bg="danger" text="white" style={{ width: '18rem' }}>
-                    <Card.Header>Header</Card.Header>
-                    <Card.Body>
-                        <Card.Title>Danger Card Title</Card.Title>
-                        <Card.Text>
-                            Some quick example text to build on the card title and make up the bulk
-                            of the card's content.
-                        </Card.Text>
-                    </Card.Body>
-                </Card>
-                <br />
-
-                <Card bg="warning" text="white" style={{ width: '18rem' }}>
-                    <Card.Header>Header</Card.Header>
-                    <Card.Body>
-                        <Card.Title>Warning Card Title</Card.Title>
-                        <Card.Text>
-                            Some quick example text to build on the card title and make up the bulk
-                            of the card's content.
-                        </Card.Text>
-                    </Card.Body>
-                </Card>
-                <br />
-
-                <Card bg="info" text="white" style={{ width: '18rem' }}>
-                    <Card.Header>Header</Card.Header>
-                    <Card.Body>
-                        <Card.Title>Info Card Title</Card.Title>
-                        <Card.Text>
-                            Some quick example text to build on the card title and make up the bulk
-                            of the card's content.
-                        </Card.Text>
-                    </Card.Body>
-                </Card>
-                <br />
-
-                <Card bg="dark" text="white" style={{ width: '18rem' }}>
-                    <Card.Header>Header</Card.Header>
-                    <Card.Body>
-                        <Card.Title>Dark Card Title</Card.Title>
-                        <Card.Text>
-                            Some quick example text to build on the card title and make up the bulk
-                            of the card's content.
-                        </Card.Text>
-                    </Card.Body>
-                </Card>
-                <br />
-
-                <Card bg="light" style={{ width: '18rem' }}>
-                    <Card.Header>Header</Card.Header>
-                    <Card.Body>
-                        <Card.Title>Light Card Title</Card.Title>
-                        <Card.Text>
-                            Some quick example text to build on the card title and make up the bulk
-                            of the card's content.
-                        </Card.Text>
-                    </Card.Body>
-                </Card>
-                <br />
-                </CardGroup>
-            </div>
-
-        );
-    }
+function MatchCard(props) {
+    const { classes } = props;
+    return (
+        <div>
+        <h1>Matches</h1>
+        <Card className={classes.card}>
+            <CardActionArea>
+                <CardMedia
+                    component="img"
+                    alt="Contemplative Reptile"
+                    className={classes.media}
+                    height="140"
+                    image="https://randomuser.me/api/portraits/men/70.jpg"
+                    title="Contemplative Reptile"
+                />
+                <CardContent>
+                    <h2> first_name last_name</h2>
+                    <p> Age: <br/>
+                        City: <br/>
+                        Closest School: <br/>
+                        Tasks: <br/>
+                        Match: % <br/>
+                    </p>
+                </CardContent>
+            </CardActionArea>
+            <CardActions>
+                <Button size="small" color="primary">
+                    Share
+                </Button>
+                <Button size="small" color="primary">
+                    Learn More
+                </Button>
+            </CardActions>
+        </Card>
+        </div>
+    );
 }
 
-export default MatchCard;
+MatchCard.propTypes = {
+    classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(MatchCard);
