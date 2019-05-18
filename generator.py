@@ -1,5 +1,6 @@
 import json
 import random
+import names
 
 schools = [{
     'name': 'Carleton',
@@ -47,18 +48,15 @@ tasks = ['Vacuuming',
          ]
 
 
-def randomizeclass():
-    return random.choice(['senior', 'student'])
-
-
 def formJSON():
     area = random.choice(schools)
-    print(area)
+    name = names.get_full_name()
+
     completejson = {
-        'class': randomizeclass(),
-        'name': '',
+        'class': 'senior',
+        'name': name,
         'age': random.randint(55, 100),
-        'email': '',
+        'email': name.lower().replace(' ', '') + '@gmail.com',
         'tasks': random.sample(tasks, random.randint(1, len(tasks))),
         'baserent': area['rent'],
         'closestschool': area['name'],
