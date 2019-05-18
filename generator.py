@@ -1,6 +1,7 @@
 import json
 import random
 import names
+import uuid
 
 schools = [{
     'name': 'Carleton',
@@ -44,15 +45,16 @@ tasks = ['Vacuuming',
          'Bringing in groceries',
          'Mopping floors',
          'Watering plants',
-         'Mowing the lawn/shoveling (deicing) driveway]',
+         'Mowing the lawn/shoveling (deicing) driveway',
          ]
 
 
-def formJSON():
+def formoneJSON():
     area = random.choice(schools)
     name = names.get_full_name()
-
-    completejson = {
+    onejson = {
+        'id': str(uuid.uuid4()),
+        'photo': '',
         'class': 'senior',
         'name': name,
         'age': random.randint(55, 100),
@@ -64,6 +66,19 @@ def formJSON():
         'city': area['city'],
         'matches': [],
     }
-    print(completejson)
+    return onejson
 
-formJSON()
+
+def generatedata():
+    users = []
+    print('generating data')
+    for i in range(500):
+        users.append(formoneJSON())
+
+    fulljson = {'users': users}
+    print('writing to file seniordata.txt')
+    with open('seniordata.txt', 'w') as f:
+        json.dump(fulljson, f)
+
+
+generatedata()
