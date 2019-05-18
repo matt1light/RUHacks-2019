@@ -1,0 +1,2 @@
+names
+pip freeze > requirements.txt

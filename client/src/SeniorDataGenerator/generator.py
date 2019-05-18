@@ -72,12 +72,12 @@ def formoneJSON():
 def generatedata():
     users = []
     print('generating data')
-    for i in range(10):
+    for i in range(500):
         users.append(formoneJSON())
     print(json.dumps(users, indent=4))
     fulljson = {'users': users}
     print('writing to file seniordata.txt')
-    with open('seniordata.txt', 'w') as f:
+    with open('seniordata.json', 'w') as f:
         f.write(json.dumps(fulljson, indent=4, sort_keys=True))
         f.close()
 
