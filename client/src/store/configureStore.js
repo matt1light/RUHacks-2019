@@ -1,13 +1,9 @@
 import { createStore, combineReducers } from 'redux';
-
-// TODO replace filller Reducer with a real one
-const fillerReducer = () => {
-    console.log('Not Implemented');
-};
+import { intakeReducer } from '../reducers/intake';
 
 export default () => {
   const store = createStore(
-      fillerReducer,
+    intakeReducer,
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
   );
 
