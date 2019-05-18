@@ -51,11 +51,18 @@ tasks = ['Vacuuming',
 
 def formoneJSON():
     area = random.choice(schools)
-    name = names.get_full_name()
+    gender = random.choice(['women', 'men'])
+    if gender == 'women':
+        name = names.get_full_name('female')
+    else:
+        name = names.get_full_name('male')
+
+    photourl = 'https://randomuser.me/api/portraits/' + gender + '/' + str(random.randint(0, 99)) + '.jpg'
     onejson = {
         'id': str(uuid.uuid4()),
-        'photo': '',
+        'photo': photourl,
         'class': 'senior',
+        'gender': gender,
         'name': name,
         'age': random.randint(55, 100),
         'email': name.lower().replace(' ', '') + '@gmail.com',
