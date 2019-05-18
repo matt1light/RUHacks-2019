@@ -76,9 +76,9 @@ def generatedata():
         users.append(formoneJSON())
     print(json.dumps(users, indent=4))
     fulljson = {'users': users}
-    print('writing to file seniordata.txt')
-    with open('seniordata.json', 'w') as f:
-        f.write(json.dumps(fulljson, indent=4, sort_keys=True))
+    print('writing to file seniordata.json')
+    with open('./seniordata.json', 'w') as f:
+        f.write(json.dumps(fulljson, indent=4))
         f.close()
 
 
