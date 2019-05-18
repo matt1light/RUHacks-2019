@@ -16,7 +16,7 @@ export const intakeReducer = (state = intakeReducerDefaultState, action) => {
     case 'UPDATE_FORM':
       return {
         ...state,
-        text: action.form
+        ...action.formFields
       };
     default:
       return state;
