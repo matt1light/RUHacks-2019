@@ -31,6 +31,21 @@ schools = [{
     'rent': 700,
 }]
 
+tasks = ['Vacuuming',
+         'Cleaning dishes',
+         'Bringing out the trash/recycling/compost',
+         'Cooking',
+         'Driving',
+         'Feeding pets',
+         'Walking Pets',
+         'Cleaning bathrooms',
+         'Laundry',
+         'Bringing in groceries',
+         'Mopping floors',
+         'Watering plants',
+         'Mowing the lawn/shoveling (deicing) driveway]',
+         ]
+
 
 def randomizeclass():
     return random.choice(['senior', 'student'])
@@ -38,19 +53,19 @@ def randomizeclass():
 
 def formJSON():
     area = random.choice(schools)
-    print (area)
-    JSON = {
+    print(area)
+    completejson = {
         'class': randomizeclass(),
         'name': '',
         'age': random.randint(55, 100),
         'email': '',
-        'tasks': [],
+        'tasks': random.sample(tasks, random.randint(1, len(tasks))),
         'baserent': area['rent'],
         'closestschool': area['name'],
         'distance': random.randint(0, 15),
         'city': area['city'],
         'matches': [],
     }
-    print(JSON)
+    print(completejson)
 
 formJSON()
