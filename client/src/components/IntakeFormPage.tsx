@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { updateForm, IformFields } from '../actions/intake';
 import firestore, {withFirebase, Firebase} from '../firebase'; 
 
-
 const uuidv4 = require('uuid/v4');
 const University = {
     Carleton: 'Carleton University',
@@ -145,6 +144,5 @@ const mapStateToProps = (state: any, props: any) => {
 }
  
 const intakeForm = withFirebase(IntakeFormPage)
-
 
 export default connect(mapStateToProps)(intakeForm);

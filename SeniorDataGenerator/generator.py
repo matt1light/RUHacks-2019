@@ -81,10 +81,10 @@ def formoneJSON():
     return onejson
 
 
-def generatedata():
+def generatedata(number):
     users = []
     print('generating data')
-    for i in range(500):
+    for i in range(number):
         users.append(formoneJSON())
     print(json.dumps(users, indent=4))
     fulljson = {'users': users}
