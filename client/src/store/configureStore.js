@@ -1,12 +1,6 @@
 import { createStore, combineReducers } from 'redux';
 import { intakeReducer } from '../reducers/intake';
-import { reactReduxFirebase, firebaseReducer} from 'react-redux-firebase';
 
-
-const rrfConfig = {
-  useFirestoreForProfile: true,
-  userProfile: 'users'
-}
 export const configureStore = () => {
   const store = createStore(
     combineReducers(

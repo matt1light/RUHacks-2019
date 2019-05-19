@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { updateForm } from '../actions/intake';
 import firestore, {withFirebase} from '../firebase'; 
-import { firebase } from 'react-redux-firebase';
 
 const uuidv4 = require('uuid/v4');
 const University = {
