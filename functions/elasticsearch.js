@@ -1,5 +1,4 @@
 const { Client } = require('@elastic/elasticsearch');
-const uuid = require('uuid');
 const client = new Client({
     node: 'https://search-ruhackswinwin-5jimc7haccje3e7kc3xrcr5qgq.us-east-2.es.amazonaws.com'
   }
