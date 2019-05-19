@@ -7,6 +7,23 @@ import firestore, {withFirebase} from '../firebase';
 import {connect} from "react-redux";
 import firebase from 'firebase';
 import '../styles/MatchCards.css';
+
+const taskconvert = {
+    'vacuum':'vacuuming',
+    'dishes': 'cleaning dishes',
+    'trash': 'taking out the trash/recycling/compost',
+    'cook': 'cooking meals',
+    'drive': 'driving',
+    'feed_pets': 'feeding pets',
+    'walk_pets': 'walking pets',
+    'bathroom': 'cleaning bathrooms',
+    'laundry': 'doing laundry',
+    'groceries': 'grocery help',
+    'mop': 'mopping floors',
+    'plants': 'watering plants',
+    'mow_lawn': 'mowing the lawn',
+    'driveway':' shoveling the driveway',
+}
 const cardStyle = {
     'borderStyle': 'dashed',
     'borderColor': 'rgba(0,0,0,0.3)',
@@ -96,10 +113,10 @@ class MatchPageBase extends Component {
                         />
                         <CardContent>
                             <h2> {this.state.match.name}</h2>
-                            <p> Age: {this.state.match.age} <br/>
-                                City: {this.state.match.city} <br/>
-                                Closest School: {this.state.match.closest_school}<br/>
-                                Tasks: {this.state.match.tasks.join(', ')} <br/>
+                            <p> Age: {this.state.match.age} <br/><br/>
+                                City: {this.state.match.city} <br/><br/>
+                                Closest School: {this.state.match.closest_school}<br/><br/>
+                                Tasks: {this.state.match.tasks.join(', ')} <br/><br/>
                                 Match: {this.state.match.fitness}% <br/>
                             </p>
                             <div>
@@ -150,6 +167,13 @@ class MatchCardBase extends Component{
     componentDidMount() {
         this.getStates();
     }
+    convertTaskList = (tasklist) =>{
+        const newList = [];
+        for (const task in tasklist){
+            newList.push(taskconvert[tasklist[task]])
+        }
+        return newList;
+    };
 
     pair = () => {
         const seniorRef = this.props.firebase.collection("seniors").doc(this.state.id).update(
@@ -186,11 +210,11 @@ class MatchCardBase extends Component{
                     />
                     <CardContent>
                         <h2> {this.state.name}</h2>
-                        <p> Age: {this.state.age} <br/>
-                            City: {this.state.city} <br/>
-                            Closest School: {this.state.closest_school} <br/>
-                            Tasks: {this.state.tasks.join(', ')} <br/>
-                            Match: {this.state.fitness}% <br/>
+                        <p> Age: {this.state.age} <br/><br/>
+                            City: {this.state.city} <br/><br/>
+                            Closest School: {this.state.closest_school} <br/><br/>
+                            Tasks: {this.convertTaskList(this.state.tasks).join(', ')} <br/><br/>
+                            Match: {this.state.fitness}%
                         </p>
                     </CardContent>
                     <div align='center'>
