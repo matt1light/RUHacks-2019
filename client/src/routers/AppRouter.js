@@ -10,8 +10,7 @@ const AppRouter = () => (
       <Switch>
         <Route path="/" component={HomePage} exact={true} />
         <Route path="/intakeform" component={IntakeFormPage} />
-          <Route path="/matches" component={MatchPage} />
-
+        <Route path="/matches" component={MatchPage} />
       </Switch>
     </div>
   </BrowserRouter>

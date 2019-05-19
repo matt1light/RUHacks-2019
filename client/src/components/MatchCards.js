@@ -18,10 +18,10 @@ class MatchPageBase extends Component {
         this.state = {
             'ids' : []
         };
+        console.log(this.props.intake_state)
     }
     componentDidMount() {
         this.getIDs();
-        console.log(this.props.intake)
     }
 
     getIDs = () =>{
@@ -53,7 +53,7 @@ class MatchPageBase extends Component {
 
 
                         this.state.ids.map((id) => (
-                            <MatchCard id={id}/>
+                            <MatchCard id={id} student = {this.props.intake_state.id}/>
                         ))
 
 
@@ -108,13 +108,13 @@ class MatchCardBase extends Component{
             {
 
                 matches: firebase.firestore.FieldValue.arrayUnion({
-                    'id': this.temporaryStudentUUID, //this.props.intake.id,
+                    'id': this.props.student, //this.props.intake.id,
                     'selected': true,
                     'fitness': 100
                 })
             }
         );
-        const studentRef = this.props.firebase.collection("students").doc(this.temporaryStudentUUID).update({
+        const studentRef = this.props.firebase.collection("students").doc(this.props.student).update({
             matches:  firebase.firestore.FieldValue.arrayUnion({
                     'id': this.state.id, //this.props.intake.id,
                     'selected': true,
@@ -163,9 +163,10 @@ const MatchPage = withFirebase(MatchPageBase);
 const mapStateToProps = (state, props) => {
     return (
         {
-            intake: state.intake
+            intake_state: state.intake
         }
     );
 }
+connect(mapStateToProps)(MatchCard);
 
 export default connect(mapStateToProps)(MatchPage);
