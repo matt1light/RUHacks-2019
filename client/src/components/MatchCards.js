@@ -8,38 +8,56 @@ import { firebase } from 'react-redux-firebase';
 const cardStyle = {
     'borderStyle': 'dashed',
     'borderColor': 'rgba(0,0,0,0.3)',
+    'maxWidth': 300
 }
 
+
+const MatchPage = () => (
+    <div>
+        <h1>Matches</h1>
+        <MatchCard id = {'016fc748-7d78-4e1a-9d6d-1e2237c6487b'}/>
+    </div>
+)
 
 class MatchCardBase extends Component{
     constructor(props){
         super(props);
-        this.matches = ['016fc748-7d78-4e1a-9d6d-1e2237c6487b'];
         this.state = {
-            'name': 'Julia S',
-            'age': 25,
-            'city': 'Ottawa',
-            'closest_school': 'Carleton',
+            'id' : props.id,
+            'name': '',
+            'age': null,
+            'city': '',
+            'closest_school': '',
             'tasks': [],
+            'photo': '',
             'fitness': 95
         }
+        this.getStates = this.getStates.bind(this);
+    }
+
+    getStates = () =>{
+        this.props.firebase.collection("seniors").doc(this.state.id).get().then((querySnapshot) => {
+            const docData = querySnapshot.data();
+            this.setState({name: docData.name});
+            this.setState({age: docData.age});
+            this.setState({photo: docData.photo});
+            this.setState({city: docData.city});
+            this.setState({closest_school: docData.closest_school});
+            const tasklist = [];
+            for (const key in docData.tasks){
+                if (docData.tasks[key]){
+                    tasklist.push(key)
+                }
+            }
+            this.setState({tasks: tasklist});
+        });
     }
 
 
-    clickMatch= () =>{
-        const button = document.getElementById('matchButton');
-       this.props.firebase.collection("seniors").doc(this.matches[0]).get().then(function(querySnapshot) {
-           const doc = querySnapshot;
-           const name = doc.data().name;
-           button.innerText= name;
-       });
-
-    };
 
     render(){
         return(
             <div>
-                <h1>Matches</h1>
                 <Grid
                     container
                     direction="row"
@@ -53,7 +71,7 @@ class MatchCardBase extends Component{
                         component="img"
                         alt="Avatar"
                         height="140"
-                        image="https://randomuser.me/api/portraits/men/50.jpg"
+                        image={this.state.photo}
                         title="Avatar"
                         style = {{'objectFit': 'contain'}}
                     />
@@ -62,12 +80,12 @@ class MatchCardBase extends Component{
                         <p> Age: {this.state.age} <br/>
                             City: {this.state.city} <br/>
                             Closest School: {this.state.closest_school} <br/>
-                            Tasks: {this.state.tasks} <br/>
+                            Tasks: {this.state.tasks.join(', ')} <br/>
                             Match: {this.state.fitness}%  <br/>
                         </p>
                     </CardContent>
                     <div align = 'center'>
-                        <button type="button" id ='matchButton' onClick = {this.clickMatch}>Match!</button>
+                        <button type="button" id ='matchButton' onClick = {this.getStates}>Match!</button>
                     </div>
                 </Card>
                 </Grid>
@@ -78,4 +96,5 @@ class MatchCardBase extends Component{
 }
 
 const MatchCard = withFirebase(MatchCardBase);
-export default MatchCard;
+
+export default MatchPage;
