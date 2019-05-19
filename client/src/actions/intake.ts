@@ -25,6 +25,9 @@ export interface IformFields{
         
     city?: string,
     school?: string,
+    currentRent?: number,
+    idealRent?: number,
+    amenities?: string,
 }
 
 export interface IupdateForm{

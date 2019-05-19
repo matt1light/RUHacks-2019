@@ -24,6 +24,9 @@ const intakeReducerDefaultState = {
   },
   city: '',
   school: '',
+  currentRent: '',
+  idealRent: '',
+  amenities: '',
 };
 
 export const intakeReducer = (state = intakeReducerDefaultState, action) => {

@@ -44,6 +44,15 @@ export class IntakeFormPage extends Component<IntakeFormPageProps,IntakeFormPage
     onAgeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         this.props.dispatch(updateForm({age: +e.target.value}))
     }
+    onCurrentRentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        this.props.dispatch(updateForm({currentRent: +e.target.value}))
+    }
+    onIdealRentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        this.props.dispatch(updateForm({idealRent: +e.target.value}))
+    }
+    onAmenitiesChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        this.props.dispatch(updateForm({amenities: e.target.value}))
+    }
     onSchoolChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         switch(e.target.value){
             case University.Carleton: 
@@ -105,12 +114,12 @@ export class IntakeFormPage extends Component<IntakeFormPageProps,IntakeFormPage
         return (
                 <div>
                     <img src={require("../WIN-WIN-Logo-322x169.png")} alt="WinWinLogo" height="100"/>
-                    <h3>Please fill in you information</h3>
+                    <h3>Please fill in your information</h3>
                 <form onSubmit={this.onSubmit} id="intake">
                 <div>
-                        <div><span>Name</span>:<input name='name' placeholder='Name' type='text' maxLength={30} defaultValue="" onChange={this.onNameChange} value={this.props.intake_state.name}/></div><br/>
-                        <div><span>Email</span>:<input name='email' placeholder='Email' type='email' maxLength={30} defaultValue="" onChange={this.onEmailChange} value={this.props.intake_state.email}/></div><br/>
-                        <div className='ageInput'><span>Age:</span><input name='age' placeholder='Age' type='number' min = {18} max = {40} onChange={this.onAgeChange} value={this.props.intake_state.age}/></div><br/>
+                        <div><span>Name</span>:<input name='name' placeholder='Name' type='text' maxLength={30} defaultValue="" onChange={this.onNameChange} value={this.props.intake_state.name}/></div><br/><br/>
+                        <div><span>Email</span>:<input name='email' placeholder='Email' type='email' maxLength={30} defaultValue="" onChange={this.onEmailChange} value={this.props.intake_state.email}/></div><br/><br/>
+                        <div className='ageInput'><span>Age:</span><input name='age' placeholder='Age' type='number' min = {18} max = {40} onChange={this.onAgeChange} value={this.props.intake_state.age}/></div><br/><br/>
                         <div>University:<select  form = "intake_state" onChange={this.onSchoolChange} value={this.props.intake_state.school}>
                             <option disabled selected value="">Select University</option>
                             <option value={University.Carleton} >Carleton University</option>
@@ -120,10 +129,12 @@ export class IntakeFormPage extends Component<IntakeFormPageProps,IntakeFormPage
                             <option value={University.York}>York University</option>
                             <option value={University.Queens}>Queens University</option>
                             <option value={University.Waterloo}>University of Waterloo</option>
-                        </select></div><br/>
+                        </select></div><br/><br/><br/>
                         </div>
+                        <div className='ageInput'><span>How much do you pay for rent currently? :<br/></span><input name='currentRent' placeholder='Current Rent' type='number' min = {0} onChange={this.onCurrentRentChange} value={this.props.intake_state.currentRent}/></div><br/><br/>
+                        <div className='ageInput'><span>How much would you like to ideally pay for rent? :<br/></span><input name='idealRent' placeholder='Ideal Rent' type='number' min = {0} onChange={this.onIdealRentChange} value={this.props.intake_state.idealRent}/></div><br/><br/>
                         <div className="bigBox">
-
+                        <div>What chrores would you be will to do for a <br/>significant for the seniors reduction in rent?</div>
                         <input type="checkbox" className="Box-align" name="vaccum" value="vacuum" onChange={this.modifyTask} checked={this.props.intake_state.tasks!.vacuum}/> vacuum<br/>
                         <input type="checkbox" className="Box-align" name="trash" value="trash" onChange={this.modifyTask} checked={this.props.intake_state.tasks!.trash}/>trash<br/>
                         <input type="checkbox" className="Box-align" name="bathroom" value="bathroom" onChange={this.modifyTask} checked={this.props.intake_state.tasks!.bathroom}/> bathroom<br/>
@@ -137,7 +148,8 @@ export class IntakeFormPage extends Component<IntakeFormPageProps,IntakeFormPage
                         <input type="checkbox" className="Box-align" name="walk_pets" value="walk_pets" onChange={this.modifyTask} checked={this.props.intake_state.tasks!.walk_pets}/> walking pets<br/>
                         <input type="checkbox" className="Box-align" name="laundry" value="laundry" onChange={this.modifyTask} checked={this.props.intake_state.tasks!.laundry}/> laundry<br/>
                         <input type="checkbox" className="Box-align" name="mow_lawn" value="mow_lawn" onChange={this.modifyTask} checked={this.props.intake_state.tasks!.mow_lawn}/> mow_lawn<br/>
-                        <input type="checkbox" className="Box-align" name="plants" value="plants" onChange={this.modifyTask} checked={this.props.intake_state.tasks!.plants}/> plants<br/>
+                        <input type="checkbox" className="Box-align" name="plants" value="plants" onChange={this.modifyTask} checked={this.props.intake_state.tasks!.plants}/> plants<br/><br/>
+                        <div>What ammenities would you like to have near your residence?<br/><br/><textarea name='amenities' maxLength={200} rows={10} cols={50} onChange={this.onAmenitiesChange} value={this.props.intake_state.amenities} placeholder="For example: grocery store, gym, liquor store, transit, etc."/></div>
                         <button onClick={this.resetDefault} > Reset </button>
                         <button type = "submit" >Submit</button>
                         {this.state.redirect && <Redirect push to={'/matches'}/>}

@@ -169,3 +169,8 @@ body {
     color: #222;
     background: rgb(4, 168, 127)
   }
+
+  textarea {
+      font-size: 22px;
+      
+  }
