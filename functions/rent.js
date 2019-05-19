@@ -66,13 +66,13 @@ const FREQUENCY_1 = {
     walk_pets: 30,
 }
 
-let sum = 0
+const getRent = (tasks, baseRent) => {
+    let sum = 0
 
-let BaseRent = 1000;
+    Object.keys(VALUE_OFF_RENT).forEach((key) => {
+        sum += tasks[key] ? (VALUE_OFF_RENT[key] * FREQUENCY[key]) : 0;
+    })
+    return sum;
+}
 
-Object.keys(VALUE_OFF_RENT).forEach((key) => {
-    sum += VALUE_OFF_RENT[key] * FREQUENCY[key];
-})
-
-let rent = BaseRent - sum;
-console.log(rent);
+module.exports = {getRent};

@@ -14,8 +14,10 @@
   },
   "dependencies": {
     "@elastic/elasticsearch": "^6.7.1",
-    "firebase-admin": "~7.0.0",
-    "firebase-functions": "^2.3.0"
+    "firebase": "^6.0.2",
+    "firebase-admin": "^7.0.0",
+    "firebase-functions": "^2.3.0",
+    "request": "^2.88.0"
   },
   "devDependencies": {
     "eslint": "^5.12.0",
