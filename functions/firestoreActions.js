@@ -1,11 +1,13 @@
+const serviceAccount = require('./fbconfig.json');
 const admin = require('firebase-admin');
 
-// const serviceAccount = require('./fbconfig.json');
+admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+    databaseURL: process.env.REACT_APP_DATABASE_URL,
+});
 
-// admin.initializeApp({
-//     credential: admin.credential.cert(serviceAccount),
-//     databaseURL: process.env.REACT_APP_DATABASE_URL,
-// }, 'node');
+admin.initializeApp();
+
 
 const firestore = admin.firestore();
 
