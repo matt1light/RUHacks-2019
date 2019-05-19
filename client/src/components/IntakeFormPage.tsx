@@ -1,17 +1,18 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {Link, withRouter} from 'react-router-dom';
 import { updateForm, IformFields } from '../actions/intake';
-//import firestore, {withFirebase, Firebase} from '../firebase'; 
-import firestore, {withFirebase} from '../firebase'; 
-
+import firestore, {withFirebase} from '../firebase';
+import {firebase} from 'react-redux-firebase';
+import {Redirect} from 'react-router';
 const uuidv4 = require('uuid/v4');
 const University = {
     Carleton: 'Carleton University',
     Ottawa: 'University of Ottawa',
-    Toronto: 'University of Toronto', 
-    Ryerson: 'Ryerson University', 
+    Toronto: 'University of Toronto',
+    Ryerson: 'Ryerson University',
     York: 'York University',
-    Queens: 'Queens University', 
+    Queens: 'Queens University',
     Waterloo: 'University of Waterloo',
 };
 
@@ -24,13 +25,13 @@ interface IntakeFormPageState{
 }
 
 export class IntakeFormPage extends Component<IntakeFormPageProps,IntakeFormPageState> {
-    state = {
-
-    }
+    state = { redirect : false}
     onSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         const id = uuidv4();
+        this.props.dispatch(updateForm({'id': id}));
         this.props.firebase.collection('students').doc(id).set({...this.props.intake_state, id});
+        this.setState({redirect: true})
     }
     onNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         this.props.dispatch(updateForm({name: e.target.value}))
@@ -84,7 +85,7 @@ export class IntakeFormPage extends Component<IntakeFormPageProps,IntakeFormPage
                 cook: false,
                 dishes: false,
                 drive: false,
-                driveway:false,
+                driveway: false,
                 feed_pets: false,
                 groceries: false,
                 laundry: false,
@@ -94,11 +95,11 @@ export class IntakeFormPage extends Component<IntakeFormPageProps,IntakeFormPage
                 trash: false,
                 vacuum: false,
                 walk_pets: false,
-              }
-            }))
-        }
+            }
+        }))
+    }
 
-    render() { 
+    render() {
         return (
             <form onSubmit={this.onSubmit} id="intake">
                 <input name='name' placeholder='Name' type='text' maxLength={30} defaultValue="" onChange={this.onNameChange} value={this.props.intake_state.name}/><br/>
@@ -106,7 +107,7 @@ export class IntakeFormPage extends Component<IntakeFormPageProps,IntakeFormPage
                 <input name='age' placeholder='Age' type='number' min={18} max={40} onChange={this.onAgeChange} value={this.props.intake_state.age}/><br/>
                 <select  form = "intake" onChange={this.onSchoolChange} value={this.props.intake_state.school}>
                     <option disabled selected value="">Select University</option>
-                    <option value={University.Carleton} >Carleton University</option>
+                    <option value={University.Carleton}>Carleton University</option>
                     <option value={University.Ottawa}>University of Ottawa</option>
                     <option value={University.Toronto}>University of Toronto</option>
                     <option value={University.Ryerson}>Ryerson University</option>
@@ -128,8 +129,9 @@ export class IntakeFormPage extends Component<IntakeFormPageProps,IntakeFormPage
                 <input type="checkbox" name="laundry" value="laundry" onChange={this.modifyTask} checked={this.props.intake_state.tasks!.laundry}/> laundry<br/>
                 <input type="checkbox" name="mow_lawn" value="mow_lawn" onChange={this.modifyTask} checked={this.props.intake_state.tasks!.mow_lawn}/> mow_lawn<br/>
                 <input type="checkbox" name="plants" value="plants" onChange={this.modifyTask} checked={this.props.intake_state.tasks!.plants}/> plants<br/>
-                <button onClick={this.resetDefault} > Reset </button>
-                <button type = "submit" >Submit</button>
+                <button onClick={this.resetDefault}> Reset</button> <button type="submit">Submit</button>
+                {this.state.redirect && <Redirect push to={'/matches'}/>}
+                <p><Link to={"/matches"}> We link now</Link></p>
             </form>
 
         );
@@ -143,7 +145,7 @@ const mapStateToProps = (state: any, props: any) => {
         }
     );
 }
- 
-const intakeForm = withFirebase(IntakeFormPage)
+
+const intakeForm = withRouter(withFirebase(IntakeFormPage));
 
 export default connect(mapStateToProps)(intakeForm);
