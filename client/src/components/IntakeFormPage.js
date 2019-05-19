@@ -5,6 +5,15 @@ import firestore, {withFirebase} from '../firebase';
 import { firebase } from 'react-redux-firebase';
 
 const uuidv4 = require('uuid/v4');
+const University = {
+    Carleton: 'Carleton University',
+    Ottawa: 'University of Ottawa',
+    Toronto: 'University of Toronto', 
+    Ryerson: 'Ryerson University', 
+    York: 'York University',
+    Queens: 'Queens University', 
+    Waterloo: 'University of Waterloo'
+};
 
 export class IntakeFormPage extends Component {
     state = {
@@ -12,7 +21,8 @@ export class IntakeFormPage extends Component {
     }
     onSubmit = (e) => {
         e.preventDefault();
-        this.props.dispatch(updateForm({id: uuidv4()}))
+        const id = uuidv4();
+        this.props.firebase.collection('students').doc(id).set({...this.props.intake, id});
     }
     onNameChange = (e) => {
         this.props.dispatch(updateForm({name: e.target.value}))
@@ -24,6 +34,25 @@ export class IntakeFormPage extends Component {
         this.props.dispatch(updateForm({age: e.target.value}))
     }
     onSchoolChange = (e) => {
+        switch(e.target.value){
+            case University.Carleton: 
+            case University.Ottawa:
+                this.props.dispatch(updateForm({city: 'Ottawa'}));
+                break;
+            case University.Toronto :
+            case University.Ryerson:
+            case University.York:
+                this.props.dispatch(updateForm({city: 'Toronto'}));
+                break;
+            case University.Queens:
+                this.props.dispatch(updateForm({city: 'Kingston'}));
+                break;
+            case University.Waterloo:
+                this.props.dispatch(updateForm({city: 'Waterloo'}));
+                break;
+            default:
+                this.props.dispatch(updateForm({city: ''}));
+        }
         this.props.dispatch(updateForm({school: e.target.value}))
     }
     modifyTask = (e) => {
@@ -65,15 +94,15 @@ export class IntakeFormPage extends Component {
                 <input name='name' placeholder='Name' type='text' maxLength="30" defaultValue="" onChange={this.onNameChange} value={this.props.intake.name}/><br/>
                 <input name='email' placeholder='Email' type='email' maxLength="30" defaultValue="" onChange={this.onEmailChange} value={this.props.intake.email}/><br/>
                 <input name='age' placeholder='Age' type='number' min = "18" max = "40" onChange={this.onAgeChange} value={this.props.intake.age}/><br/>
-                <select  form = "intake" onChange={this.onSchoolChange} value={this.props.intake.school} >
+                <select  form = "intake" onChange={this.onSchoolChange} value={this.props.intake.school}>
                     <option disabled selected value="">Select University</option>
-                    <option value="Carleton Universiy">Carleton University</option>
-                    <option value="University of Ottawa">University of Ottawa</option>
-                    <option value="University of Toronto">University of Toronto</option>
-                    <option value="Ryerson University">Ryerson University</option>
-                    <option value="York University">York University</option>
-                    <option value="Queens University">Queens University</option>
-                    <option value="University of Waterloo">University of Waterloo</option>
+                    <option value={University.Carleton} >Carleton University</option>
+                    <option value={University.Ottawa}>University of Ottawa</option>
+                    <option value={University.Toronto}>University of Toronto</option>
+                    <option value={University.Ryerson}>Ryerson University</option>
+                    <option value={University.York}>York University</option>
+                    <option value={University.Queens}>Queens University</option>
+                    <option value={University.Waterloo}>University of Waterloo</option>
                 </select><br/>
                 <input type="checkbox" name="vaccum" value="vacuum" onChange={this.modifyTask} checked={this.props.intake.tasks.vacuum}/> vacuum<br/>
                 <input type="checkbox" name="trash" value="trash" onChange={this.modifyTask} checked={this.props.intake.tasks.trash}/> trash<br/>
