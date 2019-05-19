@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { IupdateForm }
+
 const intakeReducerDefaultState = {
   name: '',
   class: '',
@@ -16,7 +18,7 @@ export const intakeReducer = (state = intakeReducerDefaultState, action) => {
     case 'UPDATE_FORM':
       return {
         ...state,
-        ...action.formFields
+        ...action.formFields,
       };
     default:
       return state;
