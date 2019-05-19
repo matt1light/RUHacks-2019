@@ -17,7 +17,7 @@ def main():
 
 
 def push_to_firestore(user):
-    doc_ref = db.collection('People').document(user['id'])
+    doc_ref = db.collection('seniors').document(user['id'])
     doc_ref.set(user)
 
 main()
