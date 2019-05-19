@@ -39,14 +39,28 @@ class MatchPageBase extends Component {
     render(){
         return(
             <div>
-                <button type="button" id ='checkButton' onClick = {this.check}>Check</button>
-                <h1>Matches</h1>
-                {
-                    this.state.ids.map((id) => (
-                            <MatchCard id = {id}/>
-                            ))
+                <div>
+                    <h1>Matches</h1>
+                </div>
+                <div>
+                <Grid
+                    container
+                    direction="row"
+                    justify="flex-start"
+                    alignItems="center"
+                    spacing = {40}
+                >
+                    {this.state.ids &&
 
-                }
+
+                        this.state.ids.map((id) => (
+                            <MatchCard id={id}/>
+                        ))
+
+
+                    }
+                </Grid>
+                </div>
             </div>
         )};
 };
@@ -92,14 +106,7 @@ class MatchCardBase extends Component{
     render(){
         return(
             <div>
-                <Grid
-                    container
-                    direction="row"
-                    justify="flex-start"
-                    alignItems="center"
-                    spacing = {40}
-                >
-
+                {this.state.photo &&
                 <Card style={cardStyle}>
                     <CardMedia
                         component="img"
@@ -107,7 +114,7 @@ class MatchCardBase extends Component{
                         height="140"
                         image={this.state.photo}
                         title="Avatar"
-                        style = {{'objectFit': 'contain'}}
+                        style={{'objectFit': 'contain'}}
                     />
                     <CardContent>
                         <h2> {this.state.name}</h2>
@@ -115,14 +122,14 @@ class MatchCardBase extends Component{
                             City: {this.state.city} <br/>
                             Closest School: {this.state.closest_school} <br/>
                             Tasks: {this.state.tasks.join(', ')} <br/>
-                            Match: {this.state.fitness}%  <br/>
+                            Match: {this.state.fitness}% <br/>
                         </p>
                     </CardContent>
-                    <div align = 'center'>
-                        <button type="button" id ='matchButton'>Match!</button>
+                    <div align='center'>
+                        <button type="button" id='matchButton'>Match!</button>
                     </div>
                 </Card>
-                </Grid>
+                }
             </div>
 
         );
