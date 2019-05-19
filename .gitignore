@@ -28,3 +28,5 @@ yarn-debug.log*
 yarn-error.log*
 
 SeniorDataGenerator/__pycache__/generator\.cpython-37\.pyc
+
+seniordata.json
