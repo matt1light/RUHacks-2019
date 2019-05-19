@@ -1,9 +1,28 @@
 export interface IformFields{
     id: string,
     name: string,
+    email: string,
     class: string,
-    age: string;
-    tasks: { [index:number]:Boolean },
+    age: string,
+    tasks: {
+        
+                bathroom: boolean,
+                cook: boolean,
+                dishes: boolean,
+                drive: boolean,
+                driveway: boolean,
+                feed_pets: boolean,
+                groceries: boolean,
+                laundry: boolean,
+                mop: boolean,
+                mow_lawn: boolean,
+                plants: boolean,
+                trash: boolean,
+                vacuum: boolean,
+                walk_pets: boolean,
+    },
+        
+        
     city: string,
     school: string,
 }

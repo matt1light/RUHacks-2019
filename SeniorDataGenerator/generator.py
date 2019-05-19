@@ -4,11 +4,11 @@ import names
 import uuid
 
 schools = [{
-    'name': 'Carleton',
+    'name': 'Carleton University',
     'city': 'Ottawa',
     'rent': 500,
 }, {
-    'name': 'UOttawa',
+    'name': 'University of Ottawa',
     'city': 'Ottawa',
     'rent': 800,
 }, {
@@ -24,7 +24,7 @@ schools = [{
     'city': 'Toronto',
     'rent': 1200,
 }, {
-    'name': 'Queens',
+    'name': 'Queens University',
     'city': 'Kingston',
     'rent': 600,
 }, {
@@ -33,7 +33,7 @@ schools = [{
     'rent': 700,
 }]
 
-tasks = ['vacuum',
+tasks = {'vacuum',
          'dishes',
          'trash',
          'cook',
@@ -47,8 +47,13 @@ tasks = ['vacuum',
          'plants',
          'mow_lawn',
          'driveway',
-         ]
+         }
 
+def randomize_tasks():
+    task_list = {}
+    for task in tasks:
+        task_list[task] = random.choice([True, False])
+    return(task_list)
 
 def formoneJSON():
     area = random.choice(schools)
@@ -66,7 +71,7 @@ def formoneJSON():
         'name': name,
         'age': random.randint(55, 100),
         'email': name.lower().replace(' ', '') + '@gmail.com',
-        'tasks': random.sample(tasks, random.randint(1, len(tasks))),
+        'tasks': randomize_tasks(),
         'base_rent': area['rent'],
         'closest_school': area['name'],
         'distance': random.randint(0, 15),

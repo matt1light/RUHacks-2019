@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
 import './styles/index.css';
 import * as serviceWorker from './serviceWorker';
-import { Provider } from 'react-redux';
 import { configureStore } from './store/configureStore';
 import AppRouter from './routers/AppRouter';
 import { FirebaseContext } from './firebase';
@@ -11,11 +11,11 @@ import firestore from './firebase';
 const store = configureStore();
 
 ReactDOM.render(
-    <FirebaseContext.Provider value={firestore}>
-        <Provider store={store}>
+    <Provider store={store}>
+        <FirebaseContext.Provider value={firestore}>
             <AppRouter />
-        </Provider>
-    </FirebaseContext.Provider>,
+        </FirebaseContext.Provider>,
+    </Provider>,
 document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
