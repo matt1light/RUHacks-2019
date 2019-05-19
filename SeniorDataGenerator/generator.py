@@ -4,11 +4,11 @@ import names
 import uuid
 
 schools = [{
-    'name': 'Carleton',
+    'name': 'Carleton University',
     'city': 'Ottawa',
     'rent': 500,
 }, {
-    'name': 'UOttawa',
+    'name': 'University of Ottawa',
     'city': 'Ottawa',
     'rent': 800,
 }, {
@@ -24,7 +24,7 @@ schools = [{
     'city': 'Toronto',
     'rent': 1200,
 }, {
-    'name': 'Queens',
+    'name': 'Queens University',
     'city': 'Kingston',
     'rent': 600,
 }, {
