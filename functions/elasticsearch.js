@@ -8,7 +8,7 @@ const client = new Client({
 
 const putPerson = (body, id, index, type) => {
     client.create({id, body, index, type}).then((data) => {
-        console.log(data);
+        // console.log('data',data);
         return true;
     }).catch((error) => {
         console.log(error);
@@ -18,7 +18,7 @@ const putPerson = (body, id, index, type) => {
 }
 
 const deletePerson = (id, index, type) => {
-    client.delete({id, body, index, type}).then((data)=> {
+    client.delete({id, index, type}).then((data)=> {
         console.log(data);
         return true;
     }).catch((error) => {

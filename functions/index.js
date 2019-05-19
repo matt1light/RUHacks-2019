@@ -16,7 +16,8 @@ exports.modifySenior = functions.firestore
         const id = context.params.userId;
         console.log(context);
         console.log(document);
-        elasticsearch.putPerson(document, id, 'seniors', 'senior');
+        document['class'] = 'senior';
+        elasticsearch.putPerson( document, id, 'people', 'person');
     }
 )
 
@@ -28,7 +29,8 @@ exports.modifyStudent = functions.firestore
         const id = context.params.userId;
         // console.log(context)
         console.log(document);
-        elasticsearch.putPerson(document, id, 'students', 'student');
+        document['class'] = 'student';
+        elasticsearch.putPerson(document, id, 'people', 'person');
     }
 )
 
@@ -36,7 +38,7 @@ exports.deleteStudent = functions.firestore
     .document('students/{userId}')
     .onDelete((change, context) => {
         const id = context.params.userId;
-        elasticsearch.deletePerson(id, 'students', 'student');
+        elasticsearch.deletePerson(id, 'people', 'person');
     }
 )
 
@@ -44,6 +46,6 @@ exports.deleteSenior = functions.firestore
     .document('seniors/{userId}')
     .onDelete((change, context) => {
         const id = context.params.userId;
-        elasticsearch.deletePerson(id, 'seniors', 'senior');
+        elasticsearch.deletePerson(id, 'people', 'person');
     }
 )
