@@ -1,0 +1,171 @@
+body {
+	font: 'Raleway', sans-serif;
+    color: rgba(0,0,0,.5);
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: .5em;
+    top: 15%;
+	background: linear-gradient(to right, rgb(83, 214, 253), rgb(148, 228, 254)); /* Standard syntax */
+}
+
+h2{
+    font: 600 3.5em 'Raleway', sans-serif;
+    color: rgba(0,0,0,.5);
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: .5em;
+    width: 100%;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-size: 40px;
+}
+
+h3 {
+	font: 900 1em 'Raleway', sans-serif;
+    color: rgba(0,0,0,.5);
+    text-align: center;
+    text-transform: none;
+    letter-spacing: 0.01em;
+
+}
+
+div {
+    text-align: center;
+}
+
+input {
+    width: 25%;
+    height: 30px;
+    border-radius: 10px;
+}
+
+
+
+.page {
+    margin: 20px;
+  }
+  
+  .interactions {
+    text-align: center;
+  }
+  
+  .table {
+    margin: 20px 0;
+  }
+  
+  .table-header {
+    display: flex;
+    line-height: 24px;
+    font-size: 16px;
+    padding: 0 10px;
+    justify-content: space-between;
+  }
+  
+  .table-empty {
+    margin: 200px;
+    text-align: center;
+    font-size: 16px;
+  }
+  
+  .table-row {
+    display: flex;
+    line-height: 24px;
+    white-space: nowrap;
+    margin: 10px 0;
+    padding: 10px;
+    background: #ffffff;
+    border: 1px solid #e3e3e3;
+  }
+  
+  .table-header > span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0 5px;
+  }
+  
+  .table-row > span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0 5px;
+  }
+  
+  .button-inline {
+    border-width: 0;
+    background: transparent;
+    color: inherit;
+    text-align: inherit;
+    -webkit-font-smoothing: inherit;
+    padding: 0;
+    font-size: inherit;
+    cursor: pointer;
+  }
+  
+  .button-active {
+    border-radius: 0;
+    border-bottom: 1px solid #38BB6C;
+  }
+
+
+body {
+    color: #222;
+    background: #f4f4f4;
+    font: 400 14px CoreSans, Arial, sans-serif;
+  }
+  
+  a {
+    color: #222;
+  }
+  
+  a:hover {
+    text-decoration: underline;
+  }
+  
+  ul, li {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  input {
+    padding: 10px;
+    border-radius: 5px;
+    margin-right: 10px;
+    border: 1px solid #dddddd;
+    font-size: 20px;
+  }
+
+  .Box-align {
+    text-align: left;
+    flex-direction: row;
+    margin: 25px;
+    width: 25px;
+    }
+
+
+  select {
+    padding: 10px;
+    height: 50px;
+    width: 175px;
+    border-radius: 5px;
+    margin-right: 10px;
+    font-size: 15px;
+    border: 1px solid #dddddd;
+  }
+  
+  button {
+    padding: 10px;
+    border-radius: 5px;
+    border: 3px solid #dddddd;
+    background: transparent;
+    color: #808080;
+    cursor: pointer;
+    height: 60px;
+    width: 180px;
+    font-size: 15px;
+    margin: 10px;
+  }
+  
+  button:hover {
+    color: #222;
+    background: rgb(4, 168, 127)
+  }
