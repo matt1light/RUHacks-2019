@@ -48,7 +48,7 @@ class MatchPageBase extends Component {
     constructor(props){
         super(props);
         this.state = {
-            'ids' : [],
+            'matches': [],
             'match_found': false,
             'match' : {
                 'id' : '',
@@ -83,18 +83,18 @@ class MatchPageBase extends Component {
         });
     }*/
    getIDs = () => {
-       if(this.props.intake_state.id) {
-           this.props.firebase.collection('students').doc(this.props.intake_state.id).get().then((querySnapshot) => {
-               const IDs = [];
-               const idData = querySnapshot.data();
-               const matches = idData.matches;
-               for (const match in matches) {
-                   IDs.push(matches[match]['id']);
-               }
-               this.setState({'ids': IDs});
-           })
-       }
-    };
+           if(this.props.intake_state.id) {
+               this.props.firebase.collection('students').doc(this.props.intake_state.id).onSnapshot((querySnapshot) => {
+
+                   const idData = querySnapshot.data();
+                   const matches = idData.matches;
+                   this.setState({'matches': matches});
+                   console.log(matches)
+               }, error => {
+                   console.log('Encountered error', error)
+               })
+           }
+   };
 
     render(){
         return( !this.state.match_found?
@@ -110,8 +110,8 @@ class MatchPageBase extends Component {
                         alignItems="center"
                         spacing = {40}
                     >
-                    {this.state.ids && this.state.ids.map((id) => (
-                            <MatchCard id={id} student = {this.props.intake_state.id? this.props.intake_state.id : "testUUID"} buttonlistener = {this.foundAMatch}/>
+                    {this.state.matches && this.state.matches.map((match) => (
+                            <MatchCard id={match.id} student = {this.props.intake_state.id? this.props.intake_state.id : "testUUID"} buttonlistener = {this.foundAMatch} fitness = {Math.round(match.fitness*10)}/>
                         ))}
                     </Grid>
                 </div>
@@ -156,7 +156,7 @@ class MatchCardBase extends Component{
             'closest_school': '',
             'tasks': [],
             'photo': '',
-            'fitness': 95,
+            'fitness': props.fitness,
             'rent': null,
         }
         this.getStates = this.getStates.bind(this);
@@ -170,7 +170,6 @@ class MatchCardBase extends Component{
             this.setState({photo: docuData.photo});
             this.setState({city: docuData.city});
             this.setState({rent: docuData.base_rent});
-
             this.setState({closest_school: docuData.closest_school});
             const tasklist = [];
             for (const key in docuData.tasks){
@@ -199,7 +198,6 @@ class MatchCardBase extends Component{
                 matches: firebase.firestore.FieldValue.arrayUnion({
                     'id': this.props.student, //this.props.intake.id,
                     'selected': true,
-                    'fitness': 100
                 })
             }
         );
@@ -207,7 +205,6 @@ class MatchCardBase extends Component{
             matches:  firebase.firestore.FieldValue.arrayUnion({
                     'id': this.state.id, //this.props.intake.id,
                     'selected': true,
-                    'fitness': 100
             })
         });
         this.props.buttonlistener(this.state);
