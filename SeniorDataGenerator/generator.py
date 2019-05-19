@@ -10,7 +10,7 @@ schools = [{
 }, {
     'name': 'University of Ottawa',
     'city': 'Ottawa',
-    'rent': 800,
+    'rent': 600,
 }, {
     'name': 'Ryerson University',
     'city': 'Toronto',
@@ -22,7 +22,7 @@ schools = [{
 }, {
     'name': 'York University',
     'city': 'Toronto',
-    'rent': 1200,
+    'rent': 800,
 }, {
     'name': 'Queens University',
     'city': 'Kingston',
@@ -30,7 +30,7 @@ schools = [{
 }, {
     'name': 'University of Waterloo',
     'city': 'Waterloo',
-    'rent': 700,
+    'rent': 600,
 }]
 
 tasks = {'vacuum',

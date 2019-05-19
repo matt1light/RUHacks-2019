@@ -111,7 +111,7 @@ class MatchPageBase extends Component {
                         spacing = {40}
                     >
                     {this.state.matches && this.state.matches.map((match) => (
-                            <MatchCard id={match.id} student = {this.props.intake_state.id? this.props.intake_state.id : "testUUID"} buttonlistener = {this.foundAMatch} fitness = {Math.round(match.fitness*10)}/>
+                            <MatchCard id={match.id} student = {this.props.intake_state.id? this.props.intake_state.id : "testUUID"} buttonlistener = {this.foundAMatch} fitness = {Math.round(match.fitness*10)} rent = {match.rent}/>
                         ))}
                     </Grid>
                 </div>
@@ -157,7 +157,7 @@ class MatchCardBase extends Component{
             'tasks': [],
             'photo': '',
             'fitness': props.fitness,
-            'rent': null,
+            'rent': props.rent,
         }
         this.getStates = this.getStates.bind(this);
     }
@@ -169,7 +169,6 @@ class MatchCardBase extends Component{
             this.setState({age: docuData.age});
             this.setState({photo: docuData.photo});
             this.setState({city: docuData.city});
-            this.setState({rent: docuData.base_rent});
             this.setState({closest_school: docuData.closest_school});
             const tasklist = [];
             for (const key in docuData.tasks){
