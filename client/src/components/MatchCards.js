@@ -14,14 +14,23 @@ const cardStyle = {
 class MatchCardBase extends Component{
     constructor(props){
         super(props);
-        this.matches = ['03acb006-4eee-4483-b879-e40d183f965f'];
+        this.matches = ['016fc748-7d78-4e1a-9d6d-1e2237c6487b'];
+        this.state = {
+            'name': 'Julia S',
+            'age': 25,
+            'city': 'Ottawa',
+            'closest_school': 'Carleton',
+            'tasks': [],
+            'fitness': 95
+        }
     }
+
+
     clickMatch= () =>{
         const button = document.getElementById('matchButton');
        this.props.firebase.collection("seniors").doc(this.matches[0]).get().then(function(querySnapshot) {
            const doc = querySnapshot;
-           const name = doc.data()['name'];
-           console.log(doc.data()['name']);
+           const name = doc.data().name;
            button.innerText= name;
        });
 
@@ -49,12 +58,12 @@ class MatchCardBase extends Component{
                         style = {{'objectFit': 'contain'}}
                     />
                     <CardContent>
-                        <h2> first_name last_name</h2>
-                        <p> Age: <br/>
-                            City: <br/>
-                            Closest School: <br/>
-                            Tasks: <br/>
-                            Match: % <br/>
+                        <h2> {this.state.name}</h2>
+                        <p> Age: {this.state.age} <br/>
+                            City: {this.state.city} <br/>
+                            Closest School: {this.state.closest_school} <br/>
+                            Tasks: {this.state.tasks} <br/>
+                            Match: {this.state.fitness}%  <br/>
                         </p>
                     </CardContent>
                     <div align = 'center'>
