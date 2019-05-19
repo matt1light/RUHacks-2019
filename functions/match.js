@@ -17,18 +17,18 @@ const search = require('./search');
 // }
 
 
-    const getMatches = (student) => {
+    const prepMatches = (matches) => {
         const promise = new Promise((resolve, reject)=>{
-            console.log('matches are being made for student', student);
-            const matches = search.getMatch(student);
-            console.log('matches were found with esearch', matches);
-            resolve(matches)
-        }).catch((error)=> reject(error));
+            // console.log('matches are being made for student', student);
+            // const matches = search.getMatch(student);
+            // console.log('matches were found with esearch', matches);
+            resolve(matches).catch((error)=> reject(error));
+        })
         return promise;
     }
 
 
-    const populateMatches = (student) => {
+    const populateMatches = ({matches, student}) => {
         const promise = new Promise((resolve, reject)=>{
             const matchObjects = matches.map(element => ({
                 id: element._source.id,
@@ -36,12 +36,12 @@ const search = require('./search');
                 selected: false
             }))
             console.log('match objects are populated', matchObjects);
-            resolve(matchObjects);
-        }).catch((error)=> reject(error));
+            resolve(matchObjects).catch((error) => reject(error));
+        });
         return promise;
     }
 
-module.exports = {populateMatches, getMatches}
+module.exports = {populateMatches, prepMatches}
 
 
 // match
