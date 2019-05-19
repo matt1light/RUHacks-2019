@@ -61,7 +61,6 @@ class MatchPageBase extends Component {
                 'fitness': 95,
             }
         };
-        console.log(this.props.intake_state);
     }
     componentDidMount() {
         this.getIDs();
@@ -69,8 +68,9 @@ class MatchPageBase extends Component {
     foundAMatch = (match_states) =>{
         this.setState({match_found: true});
         this.setState({match: match_states});
-    }
-    getIDs = () =>{
+    };
+
+ /*   getIDs = () =>{
         this.props.firebase.collection('seniors').get().then((querySnapshot) => {
             const IDs = [];
             querySnapshot.forEach(function(doc) {
@@ -78,8 +78,23 @@ class MatchPageBase extends Component {
             });
             const sampledIDS = IDs.slice(0,10);
             this.setState({'ids': sampledIDS});
+            console.log(this.state.ids)d
+
         });
-    }
+    }*/
+   getIDs = () => {
+       if(this.props.intake_state.id) {
+           this.props.firebase.collection('students').doc(this.props.intake_state.id).get().then((querySnapshot) => {
+               const IDs = [];
+               const idData = querySnapshot.data();
+               const matches = idData.matches;
+               for (const match in matches) {
+                   IDs.push(matches[match]['id']);
+               }
+               this.setState({'ids': IDs});
+           })
+       }
+    };
 
     render(){
         return( !this.state.match_found?
@@ -142,22 +157,24 @@ class MatchCardBase extends Component{
             'tasks': [],
             'photo': '',
             'fitness': 95,
+            'rent': null,
         }
-        this.temporaryStudentUUID = '785297a3-ecfc-4e54-a801-bb65e5c99b68';
         this.getStates = this.getStates.bind(this);
     }
 
     getStates = () =>{
         this.props.firebase.collection("seniors").doc(this.state.id).get().then((querySnapshot) => {
-            const docData = querySnapshot.data();
-            this.setState({name: docData.name});
-            this.setState({age: docData.age});
-            this.setState({photo: docData.photo});
-            this.setState({city: docData.city});
-            this.setState({closest_school: docData.closest_school});
+            const docuData = querySnapshot.data();
+            this.setState({name: docuData.name});
+            this.setState({age: docuData.age});
+            this.setState({photo: docuData.photo});
+            this.setState({city: docuData.city});
+            this.setState({rent: docuData.base_rent});
+
+            this.setState({closest_school: docuData.closest_school});
             const tasklist = [];
-            for (const key in docData.tasks){
-                if (docData.tasks[key]){
+            for (const key in docuData.tasks){
+                if (docuData.tasks[key]){
                     tasklist.push(key)
                 }
             }
@@ -213,6 +230,7 @@ class MatchCardBase extends Component{
                         <p> Age: {this.state.age} <br/><br/>
                             City: {this.state.city} <br/><br/>
                             Closest School: {this.state.closest_school} <br/><br/>
+                            Rent: ${this.state.rent} <br/><br/>
                             Tasks: {this.convertTaskList(this.state.tasks).join(', ')} <br/><br/>
                             Match: {this.state.fitness}%
                         </p>
