@@ -33,7 +33,8 @@ const search = require('./search');
             const matchObjects = matches.map(element => ({
                 id: element._source.id,
                 rent: rentCalc.getRent(student.tasks, element._source.base_rent),
-                selected: false
+                selected: false,
+                fitness: element._score
             }))
             console.log('match objects are populated', matchObjects);
             resolve(matchObjects).catch((error) => reject(error));
