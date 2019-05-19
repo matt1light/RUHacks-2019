@@ -15,7 +15,7 @@ const firestore = admin.firestore();
 const sendMatchesToFirestore = (student_id, matches) => {
     console.log('matches are sending', matches);
     console.log('to id', student_id);
-    firestore.collection('students').doc(student_id).set({
+    firestore.collection('students').doc(student_id).update({
         matches: matches
     })
 }
@@ -61,7 +61,7 @@ const doTheWholeMatchingThing = (student) => {
     });
 }
 
-// console.log(doTheWholeMatchingThing(test_student));
+console.log(doTheWholeMatchingThing(test_student));
 
 //  {wildcard} this is a way to allow any value for it, and grab it as a variable.
 
@@ -81,6 +81,7 @@ exports.modifySenior = functions.firestore
 exports.modifyStudent = functions.firestore
     .document('students/{userId}')
     .onWrite((change, context) => { 
+        console.log({change, context});
         // call my send to elasticsearch call
         const document = change.after.exists ? change.after.data() : null;
         const id = context.params.userId;
@@ -89,6 +90,7 @@ exports.modifyStudent = functions.firestore
         document['class'] = 'student';
         elasticsearch.putPerson(document, id, 'people', 'person');
         const docWithId = Object.assign(document, {id: id});
+        console.log(docWithId)
         doTheWholeMatchingThing(docWithId);
    });
 
