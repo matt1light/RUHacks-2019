@@ -4,13 +4,13 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Grid from '@material-ui/core/Grid'
 import firestore, {withFirebase} from '../firebase';
-import { firebase } from 'react-redux-firebase';
+import {connect} from "react-redux";
+import firebase from 'firebase';
 const cardStyle = {
     'borderStyle': 'dashed',
     'borderColor': 'rgba(0,0,0,0.3)',
     'maxWidth': 300
 }
-
 
 class MatchPageBase extends Component {
     constructor(props){
@@ -21,6 +21,7 @@ class MatchPageBase extends Component {
     }
     componentDidMount() {
         this.getIDs();
+        console.log(this.props.intake)
     }
 
     getIDs = () =>{
@@ -33,9 +34,7 @@ class MatchPageBase extends Component {
             this.setState({'ids': sampledIDS});
         });
     }
-    check = () =>{
-        console.log(this.state.ids);
-    }
+
     render(){
         return(
             <div>
@@ -78,6 +77,7 @@ class MatchCardBase extends Component{
             'photo': '',
             'fitness': 95
         }
+        this.temporaryStudentUUID = '785297a3-ecfc-4e54-a801-bb65e5c99b68';
         this.getStates = this.getStates.bind(this);
     }
 
@@ -102,7 +102,26 @@ class MatchCardBase extends Component{
         this.getStates();
     }
 
+    pair = () => {
 
+        const seniorRef = this.props.firebase.collection("seniors").doc(this.state.id).update(
+            {
+
+                matches: firebase.firestore.FieldValue.arrayUnion({
+                    'id': this.temporaryStudentUUID, //this.props.intake.id,
+                    'selected': true,
+                    'fitness': 100
+                })
+            }
+        );
+        const studentRef = this.props.firebase.collection("students").doc(this.temporaryStudentUUID).update({
+            matches:  firebase.firestore.FieldValue.arrayUnion({
+                    'id': this.state.id, //this.props.intake.id,
+                    'selected': true,
+                    'fitness': 100
+            })
+        });
+    }
     render(){
         return(
             <div>
@@ -126,7 +145,7 @@ class MatchCardBase extends Component{
                         </p>
                     </CardContent>
                     <div align='center'>
-                        <button type="button" id='matchButton'>Match!</button>
+                        <button type="button" id='matchButton' onClick={this.pair}>Match!</button>
                     </div>
                 </Card>
                 }
@@ -140,4 +159,13 @@ const MatchCard = withFirebase(MatchCardBase);
 
 const MatchPage = withFirebase(MatchPageBase);
 
-export default MatchPage;
+
+const mapStateToProps = (state, props) => {
+    return (
+        {
+            intake: state.intake
+        }
+    );
+}
+
+export default connect(mapStateToProps)(MatchPage);
