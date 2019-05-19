@@ -2,6 +2,7 @@
 
 # dependencies
 /node_modules
+/rent/node_modules
 /.pnp
 .pnp.js
 

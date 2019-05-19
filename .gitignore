@@ -30,3 +30,4 @@ yarn-error.log*
 SeniorDataGenerator/__pycache__/generator\.cpython-37\.pyc
 
 seniordata.json
+rent/node_modules/
