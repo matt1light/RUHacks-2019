@@ -8,7 +8,6 @@ const client = new Client({
 
 const putPerson = (body, id, index, type) => {
     client.create({id, body, index, type}).then((data) => {
-        // console.log('data',data);
         return true;
     }).catch((error) => {
         console.log(error);

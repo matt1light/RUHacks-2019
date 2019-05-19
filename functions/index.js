@@ -31,6 +31,7 @@ exports.modifyStudent = functions.firestore
         console.log(document);
         document['class'] = 'student';
         elasticsearch.putPerson(document, id, 'people', 'person');
+
     }
 )
 
