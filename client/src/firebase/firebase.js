@@ -2,7 +2,7 @@ import firebase from 'firebase/app';
 import 'firebase/firestore';
 
 
-var firebaseConfig = {
+const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
   authDomain: process.env.REACT_APP_AUTH_DOMAIN,
   databaseURL: process.env.REACT_APP_DATABASE_URL,
@@ -12,9 +12,6 @@ var firebaseConfig = {
   appId: process.env.REACT_APP_APP_ID
 };
 
-console.log()
-
-console.log(firebaseConfig);
   // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
