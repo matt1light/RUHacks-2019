@@ -72,7 +72,7 @@ const getRent = (tasks, baseRent) => {
     Object.keys(VALUE_OFF_RENT).forEach((key) => {
         sum += tasks[key] ? (VALUE_OFF_RENT[key] * FREQUENCY[key]) : 0;
     })
-    return baseRent - sum;
+    return (baseRent - sum);
 }
 
 module.exports = {getRent};
