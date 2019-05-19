@@ -12,12 +12,44 @@ const cardStyle = {
 }
 
 
-const MatchPage = () => (
-    <div>
-        <h1>Matches</h1>
-        <MatchCard id = {'016fc748-7d78-4e1a-9d6d-1e2237c6487b'}/>
-    </div>
-)
+class MatchPageBase extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            'ids' : []
+        };
+    }
+    componentDidMount() {
+        this.getIDs();
+    }
+
+    getIDs = () =>{
+        this.props.firebase.collection('seniors').get().then((querySnapshot) => {
+            const IDs = [];
+            querySnapshot.forEach(function(doc) {
+                IDs.push(doc.id)
+            });
+            const sampledIDS = IDs.slice(0,10);
+            this.setState({'ids': sampledIDS});
+        });
+    }
+    check = () =>{
+        console.log(this.state.ids);
+    }
+    render(){
+        return(
+            <div>
+                <button type="button" id ='checkButton' onClick = {this.check}>Check</button>
+                <h1>Matches</h1>
+                {
+                    this.state.ids.map((id) => (
+                            <MatchCard id = {id}/>
+                            ))
+
+                }
+            </div>
+        )};
+};
 
 class MatchCardBase extends Component{
     constructor(props){
@@ -52,7 +84,9 @@ class MatchCardBase extends Component{
             this.setState({tasks: tasklist});
         });
     }
-
+    componentDidMount() {
+        this.getStates();
+    }
 
 
     render(){
@@ -85,7 +119,7 @@ class MatchCardBase extends Component{
                         </p>
                     </CardContent>
                     <div align = 'center'>
-                        <button type="button" id ='matchButton' onClick = {this.getStates}>Match!</button>
+                        <button type="button" id ='matchButton'>Match!</button>
                     </div>
                 </Card>
                 </Grid>
@@ -96,5 +130,7 @@ class MatchCardBase extends Component{
 }
 
 const MatchCard = withFirebase(MatchCardBase);
+
+const MatchPage = withFirebase(MatchPageBase);
 
 export default MatchPage;
