@@ -131,7 +131,6 @@ export class IntakeFormPage extends Component<IntakeFormPageProps,IntakeFormPage
                 <input type="checkbox" name="plants" value="plants" onChange={this.modifyTask} checked={this.props.intake_state.tasks!.plants}/> plants<br/>
                 <button onClick={this.resetDefault}> Reset</button> <button type="submit">Submit</button>
                 {this.state.redirect && <Redirect push to={'/matches'}/>}
-                <p><Link to={"/matches"}> We link now</Link></p>
             </form>
 
         );
