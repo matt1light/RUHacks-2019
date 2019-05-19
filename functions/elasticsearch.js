@@ -6,15 +6,26 @@ const client = new Client({
 );
 // const client = new Client({node: 'http://localhost:9200'})
 
-const putUser = (userdata) => {
-    client.create({id: uuid(), body: userdata, index: 'people', type: 'person'}).then((data) => {
-        console.log('success?')
+const putPerson = (body, id, index, type) => {
+    client.create({id, body, index, type}).then((data) => {
         console.log(data);
         return true;
     }).catch((error) => {
         console.log(error);
+        console.log(error.meta.body.error)
         return false;
     });
 }
 
-module.exports = {putUser}
+const deletePerson = (id, index, type) => {
+    client.delete({id, body, index, type}).then((data)=> {
+        console.log(data);
+        return true;
+    }).catch((error) => {
+        console.log(error);
+        console.log(error.meta.body.error)
+        return false;
+    })
+}
+
+module.exports = {putPerson, deletePerson}
