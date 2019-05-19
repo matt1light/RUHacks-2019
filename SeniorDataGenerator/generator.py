@@ -4,11 +4,11 @@ import names
 import uuid
 
 schools = [{
-    'name': 'Carleton',
+    'name': 'Carleton University',
     'city': 'Ottawa',
     'rent': 500,
 }, {
-    'name': 'UOttawa',
+    'name': 'University of Ottawa',
     'city': 'Ottawa',
     'rent': 800,
 }, {
@@ -24,7 +24,7 @@ schools = [{
     'city': 'Toronto',
     'rent': 1200,
 }, {
-    'name': 'Queens',
+    'name': 'Queens University',
     'city': 'Kingston',
     'rent': 600,
 }, {
@@ -33,21 +33,27 @@ schools = [{
     'rent': 700,
 }]
 
-tasks = ['Vacuuming',
-         'Cleaning dishes',
-         'Bringing out the trash/recycling/compost',
-         'Cooking',
-         'Driving',
-         'Feeding pets',
-         'Walking Pets',
-         'Cleaning bathrooms',
-         'Laundry',
-         'Bringing in groceries',
-         'Mopping floors',
-         'Watering plants',
-         'Mowing the lawn/shoveling (deicing) driveway',
-         ]
+tasks = {'vacuum',
+         'dishes',
+         'trash',
+         'cook',
+         'drive',
+         'feed_pets',
+         'walk_pets',
+         'bathroom',
+         'laundry',
+         'groceries',
+         'mop',
+         'plants',
+         'mow_lawn',
+         'driveway',
+         }
 
+def randomize_tasks():
+    task_list = {}
+    for task in tasks:
+        task_list[task] = random.choice([True, False])
+    return(task_list)
 
 def formoneJSON():
     area = random.choice(schools)
@@ -62,13 +68,12 @@ def formoneJSON():
         'id': str(uuid.uuid4()),
         'photo': photourl,
         'class': 'senior',
-        'gender': gender,
         'name': name,
         'age': random.randint(55, 100),
         'email': name.lower().replace(' ', '') + '@gmail.com',
-        'tasks': random.sample(tasks, random.randint(1, len(tasks))),
-        'baserent': area['rent'],
-        'closestschool': area['name'],
+        'tasks': randomize_tasks(),
+        'base_rent': area['rent'],
+        'closest_school': area['name'],
         'distance': random.randint(0, 15),
         'city': area['city'],
         'matches': [],
@@ -84,9 +89,12 @@ def generatedata():
     print(json.dumps(users, indent=4))
     fulljson = {'users': users}
     print('writing to file seniordata.json')
+    write_data(fulljson)
+    return fulljson
+
+
+def write_data(data):
     with open('./seniordata.json', 'w') as f:
-        f.write(json.dumps(fulljson, indent=4))
+        f.write(json.dumps(data, indent=4))
         f.close()
 
-
-generatedata()
