@@ -1,10 +1,10 @@
 export interface IformFields{
-    id?: string,
-    name?: string,
-    email?: string,
-    class?: string,
-    age?: number,
-    tasks?: {
+    id: string,
+    name: string,
+    email: string,
+    class: string,
+    age: number,
+    tasks: {
         
                 bathroom?: boolean,
                 cook?: boolean,
@@ -23,16 +23,16 @@ export interface IformFields{
     },
         
         
-    city?: string,
-    school?: string,
+    city: string,
+    school: string,
 }
 
 export interface IupdateForm{
   type: string,
-  formFields: IformFields,
+        formFields: Partial<IformFields>,
 }
 
-export const updateForm = (formFields: IformFields):IupdateForm => ({
+export const updateForm = (formFields: Partial<IformFields>):IupdateForm => ({
   type: 'UPDATE_FORM',
   formFields,
 });

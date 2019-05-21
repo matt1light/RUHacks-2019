@@ -1,8 +1,8 @@
 import React from 'react';
-import { BrowserRouter, Route, Switch} from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import IntakeFormPage from '../components/IntakeFormPage';
-import HomePage from '../components/HomePage'
-import MatchPage from "../components/MatchCards";
+import HomePage from '../components/HomePage';
+import MatchPage from '../components/MatchCards';
 
 const AppRouter = () => (
   <BrowserRouter>

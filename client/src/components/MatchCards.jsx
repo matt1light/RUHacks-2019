@@ -3,7 +3,7 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Grid from '@material-ui/core/Grid'
-import firestore, {withFirebase} from '../firebase';
+import {withFirebase} from '../firebase';
 import {connect} from "react-redux";
 import firebase from 'firebase';
 import '../styles/MatchCards.css';

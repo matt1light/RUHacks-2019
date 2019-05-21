@@ -1,11 +1,10 @@
-import React from 'react';
-
+import { IupdateForm } from "../actions/intake";
 const intakeReducerDefaultState = {
   id: '',
   name: '',
   email: '',
   class: 'student',
-  age: '',
+  age: -1,
   tasks: {
     bathroom: false,
     cook: false,
@@ -25,8 +24,12 @@ const intakeReducerDefaultState = {
   city: '',
   school: '',
 };
-
-export const intakeReducer = (state = intakeReducerDefaultState, action) => {
+type TMP = typeof intakeReducerDefaultState;
+interface IntakeFields extends TMP {}
+export interface GlobalReduxState {
+  intake: IntakeFields; 
+}
+export const intakeReducer = (state = intakeReducerDefaultState, action: IupdateForm) => {
   switch (action.type) {
     case 'UPDATE_FORM':
       return {

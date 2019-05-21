@@ -3,13 +3,12 @@ import ReactDOM from 'react-dom';
 import './styles/index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import { FirebaseContext } from './firebase';
-import firestore from './firebase';
+import firestore, { FirebaseContext } from './firebase';
 
-ReactDOM.render( <FirebaseContext.Provider value={firestore}>
-<App />
-</FirebaseContext.Provider>,
-
+ReactDOM.render(
+    <FirebaseContext.Provider value={firestore}>
+        <App />
+    </FirebaseContext.Provider>,
 document.getElementById('root'));
 
 

@@ -1,11 +1,14 @@
 import React, {Component} from 'react';
-import {connect} from 'react-redux';
+// import {connect} from 'react-redux';
+import {Connect} from '../store/ReduxHelper';
 import {Link, withRouter} from 'react-router-dom';
 import { updateForm, IformFields } from '../actions/intake';
 import firestore, {withFirebase} from '../firebase';
 import {firebase} from 'react-redux-firebase';
-import {Redirect} from 'react-router';
 import './index.css'
+import {Redirect, RouteComponentProps} from 'react-router';
+import { Dispatch, AnyAction } from 'redux';
+import { InferableComponentEnhancerWithProps } from 'react-redux';
 const uuidv4 = require('uuid/v4');
 
 const University = {
@@ -40,63 +43,73 @@ const taskconvert = {
     'driveway':' shoveling the driveway',
 }
 
-interface IntakeFormPageProps{
+interface IntakeFormPageInputProps extends RouteComponentProps {
     firebase: any;
-    dispatch: any;
+    dispatch: Dispatch<AnyAction>;
     intake_state: IformFields;
 }
 interface IntakeFormPageState {
 }
+const _connect = Connect(state => ({
+        intake_state: state.intake
+    }),
+    {
+        updateForm
+    }
+);
+type AddedProps = typeof _connect extends InferableComponentEnhancerWithProps<infer P, any> ? P : never;
 
-export class IntakeFormPage extends Component<IntakeFormPageProps,IntakeFormPageState> {
+type AllProps = IntakeFormPageInputProps & AddedProps;
+
+export class IntakeFormPage extends Component<AllProps,IntakeFormPageState> {
     state = { redirect : false}
     onSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         const id = uuidv4();
-        this.props.dispatch(updateForm({'id': id}));
+        this.props.updateForm({'id': id});
         this.props.firebase.collection('students').doc(id).set({...this.props.intake_state, id});
         this.setState({redirect: true})
     }
     onNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        this.props.dispatch(updateForm({name: e.target.value}))
+        this.props.updateForm({name: e.target.value})
     }
     onEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        this.props.dispatch(updateForm({email: e.target.value}))
+        this.props.updateForm({email: e.target.value})
     }
     onAgeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        this.props.dispatch(updateForm({age: +e.target.value}))
+        this.props.updateForm({age: +e.target.value})
     }
     onSchoolChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         switch(e.target.value){
             case University.Carleton: 
             case University.Ottawa:
-                this.props.dispatch(updateForm({city: 'Ottawa'}));
+                this.props.updateForm({city: 'Ottawa'});
                 break;
             case University.Toronto :
             case University.Ryerson:
             case University.York:
-                this.props.dispatch(updateForm({city: 'Toronto'}));
+                this.props.updateForm({city: 'Toronto'});
                 break;
             case University.Queens:
-                this.props.dispatch(updateForm({city: 'Kingston'}));
+                this.props.updateForm({city: 'Kingston'});
                 break;
             case University.Waterloo:
-                this.props.dispatch(updateForm({city: 'Waterloo'}));
+                this.props.updateForm({city: 'Waterloo'});
                 break;
             default:
-                this.props.dispatch(updateForm({city: ''}));
+                this.props.updateForm({city: ''});
         }
-        this.props.dispatch(updateForm({school: e.target.value}))
+        this.props.updateForm({school: e.target.value})
     }
     modifyTask = (e: React.ChangeEvent<HTMLInputElement>) => {
         const updates = {
             [e.target.value]: e.target.checked
         }
-        this.props.dispatch(updateForm({tasks: updates}))
+        this.props.updateForm({tasks: updates})
     }
     resetDefault = (e :React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
-        this.props.dispatch(updateForm({
+        this.props.updateForm({
             id: "",
             name: "",
             email: "",
@@ -120,7 +133,7 @@ export class IntakeFormPage extends Component<IntakeFormPageProps,IntakeFormPage
                 vacuum: false,
                 walk_pets: false,
             }
-        }))
+        })
     }
 
     render() {
@@ -151,20 +164,20 @@ export class IntakeFormPage extends Component<IntakeFormPageProps,IntakeFormPage
                         </div>
                         <div className="bigBox">
 
-                        <input type="checkbox" className="Box-align" name="vaccum" value="vacuum" onChange={this.modifyTask} checked={this.props.intake_state.tasks!.vacuum}/> Vacuum Weekly<br/>
-                        <input type="checkbox" className="Box-align" name="trash" value="trash" onChange={this.modifyTask} checked={this.props.intake_state.tasks!.trash}/>Take out the trash<br/>
-                        <input type="checkbox" className="Box-align" name="bathroom" value="bathroom" onChange={this.modifyTask} checked={this.props.intake_state.tasks!.bathroom}/> Clean the bathroom<br/>
-                        <input type="checkbox" className="Box-align" name="mop" value="mop" onChange={this.modifyTask} checked={this.props.intake_state.tasks!.mop}/> Mop bi-weekly<br/>
-                        <input type="checkbox" className="Box-align" name="dishes" value="dishes" onChange={this.modifyTask} checked={this.props.intake_state.tasks!.dishes}/> Do the dishes daily<br/>
-                        <input type="checkbox" className="Box-align" name="cook" value="cook" onChange={this.modifyTask} checked={this.props.intake_state.tasks!.cook}/> Cook Meals <br/>
-                        <input type="checkbox" className="Box-align" name="groceries" value="groceries" onChange={this.modifyTask} checked={this.props.intake_state.tasks!.groceries}/> Pick up groceries <br/>
-                        <input type="checkbox" className="Box-align" name="drive" value="drive" onChange={this.modifyTask} checked={this.props.intake_state.tasks!.drive}/> Drive someone around a few times per week<br/>
-                        <input type="checkbox" className="Box-align" name="driveway" value="driveway" onChange={this.modifyTask} checked={this.props.intake_state.tasks!.driveway}/> Shovel the driveway<br/>
-                        <input type="checkbox" className="Box-align" name="feed_pets" value="feed_pets" onChange={this.modifyTask} checked={this.props.intake_state.tasks!.feed_pets}/> Feed pets daily <br/>
-                        <input type="checkbox" className="Box-align" name="walk_pets" value="walk_pets" onChange={this.modifyTask} checked={this.props.intake_state.tasks!.walk_pets}/> Walk pets daily <br/>
-                        <input type="checkbox" className="Box-align" name="laundry" value="laundry" onChange={this.modifyTask} checked={this.props.intake_state.tasks!.laundry}/> Laundry daily <br/>
-                        <input type="checkbox" className="Box-align" name="mow_lawn" value="mow_lawn" onChange={this.modifyTask} checked={this.props.intake_state.tasks!.mow_lawn}/> Mow the lawn <br/>
-                        <input type="checkbox" className="Box-align" name="plants" value="plants" onChange={this.modifyTask} checked={this.props.intake_state.tasks!.plants}/> Watering plants <br/>
+                        <input type="checkbox" className="Box-align" name="vaccum" value="vacuum" onChange={this.modifyTask} checked={this.props.intake_state.tasks.vacuum}/> Vacuum Weekly<br/>
+                        <input type="checkbox" className="Box-align" name="trash" value="trash" onChange={this.modifyTask} checked={this.props.intake_state.tasks.trash}/>Take out the trash<br/>
+                        <input type="checkbox" className="Box-align" name="bathroom" value="bathroom" onChange={this.modifyTask} checked={this.props.intake_state.tasks.bathroom}/> Clean the bathroom<br/>
+                        <input type="checkbox" className="Box-align" name="mop" value="mop" onChange={this.modifyTask} checked={this.props.intake_state.tasks.mop}/> Mop bi-weekly<br/>
+                        <input type="checkbox" className="Box-align" name="dishes" value="dishes" onChange={this.modifyTask} checked={this.props.intake_state.tasks.dishes}/> Do the dishes daily<br/>
+                        <input type="checkbox" className="Box-align" name="cook" value="cook" onChange={this.modifyTask} checked={this.props.intake_state.tasks.cook}/> Cook Meals <br/>
+                        <input type="checkbox" className="Box-align" name="groceries" value="groceries" onChange={this.modifyTask} checked={this.props.intake_state.tasks.groceries}/> Pick up groceries <br/>
+                        <input type="checkbox" className="Box-align" name="drive" value="drive" onChange={this.modifyTask} checked={this.props.intake_state.tasks.drive}/> Drive someone around a few times per week<br/>
+                        <input type="checkbox" className="Box-align" name="driveway" value="driveway" onChange={this.modifyTask} checked={this.props.intake_state.tasks.driveway}/> Shovel the driveway<br/>
+                        <input type="checkbox" className="Box-align" name="feed_pets" value="feed_pets" onChange={this.modifyTask} checked={this.props.intake_state.tasks.feed_pets}/> Feed pets daily <br/>
+                        <input type="checkbox" className="Box-align" name="walk_pets" value="walk_pets" onChange={this.modifyTask} checked={this.props.intake_state.tasks.walk_pets}/> Walk pets daily <br/>
+                        <input type="checkbox" className="Box-align" name="laundry" value="laundry" onChange={this.modifyTask} checked={this.props.intake_state.tasks.laundry}/> Laundry daily <br/>
+                        <input type="checkbox" className="Box-align" name="mow_lawn" value="mow_lawn" onChange={this.modifyTask} checked={this.props.intake_state.tasks.mow_lawn}/> Mow the lawn <br/>
+                        <input type="checkbox" className="Box-align" name="plants" value="plants" onChange={this.modifyTask} checked={this.props.intake_state.tasks.plants}/> Watering plants <br/>
                         <button onClick={this.resetDefault} > Reset </button>
                         <button type = "submit" >Submit</button>
                         {this.state.redirect && <Redirect push to={'/matches'}/>}
@@ -176,14 +189,7 @@ export class IntakeFormPage extends Component<IntakeFormPageProps,IntakeFormPage
     }
 }
 
-const mapStateToProps = (state: any, props: any) => {
-    return (
-        {
-            intake_state: state.intake
-        }
-    );
-}
 
-const intakeForm = withRouter(withFirebase(IntakeFormPage));
+const intakeForm = withFirebase(IntakeFormPage);
 
-export default connect(mapStateToProps)(intakeForm);
+export default _connect(intakeForm);
